@@ -7,9 +7,12 @@ from PyQt5.QtCore import Qt, QRectF, QEvent
 
 class MainWindow(QWidget):
     
-    def __init__(self):
+    def __init__(self, args):
         
         super(self.__class__, self).__init__()
+
+        print('-- args --')
+        print(args)
         
         self.setMouseTracking(True)
         self.installEventFilter(self)
@@ -17,13 +20,16 @@ class MainWindow(QWidget):
         # Init recur time
         self.limit = 1
         
-        # 3/4/5
-        self.cos_theta   = 4 / 5;
-        self.sin_theta   = 3 / 5;
+        if args[1] != None and args[1] == '1':
 
-        # 5/12/13
-        self.cos_theta   = 12 / 13;
-        self.sin_theta   = 5 / 13;
+            # 3/4/5
+            self.cos_theta   = 4 / 5;
+            self.sin_theta   = 3 / 5;
+            
+        elif args[1] == '2':
+            # 5/12/13
+            self.cos_theta   = 12 / 13;
+            self.sin_theta   = 5 / 13;
 
         self.theta_left  = math.acos(self.sin_theta) * 180 / math.pi
         self.theta_right = math.acos(self.sin_theta) * 180 / math.pi
@@ -126,5 +132,5 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     app = QApplication(sys.argv)
-    MainWindow = MainWindow()
+    MainWindow = MainWindow(sys.argv)
     sys.exit(app.exec_())
