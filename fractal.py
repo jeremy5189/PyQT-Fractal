@@ -25,8 +25,9 @@ class MainWindow(QWidget):
             # 3/4/5
             self.cos_theta   = 4 / 5;
             self.sin_theta   = 3 / 5;
-            
+
         elif args[1] == '2':
+
             # 5/12/13
             self.cos_theta   = 12 / 13;
             self.sin_theta   = 5 / 13;
@@ -121,6 +122,8 @@ class MainWindow(QWidget):
             # increase recursive level
             if event.button() == Qt.LeftButton:
                 self.limit += 1
+            elif event.button() == Qt.RightButton:
+                self.limit -= 1
         
             self.repaint()
 
