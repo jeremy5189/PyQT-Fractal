@@ -1,21 +1,32 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import Qt, QRectF, QEvent
 import signal
 import math
-
+from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtGui import QPainter, QPen, QColor, QBrush
+from PyQt5.QtCore import Qt, QRectF, QEvent
 
 class MainWindow(QWidget):
     
     def __init__(self):
+        
         super(self.__class__, self).__init__()
+        
         self.setMouseTracking(True)
         self.installEventFilter(self)
 
+        # Init recur time
         self.limit = 1
-        self.theta_left = math.acos(3 / 5) * 180 / math.pi
-        self.theta_right = math.acos(3 / 5) * 180 / math.pi
+        
+        # 3/4/5
+        self.cos_theta   = 4 / 5;
+        self.sin_theta   = 3 / 5;
+
+        # 5/12/13
+        self.cos_theta   = 12 / 13;
+        self.sin_theta   = 5 / 13;
+
+        self.theta_left  = math.acos(self.sin_theta) * 180 / math.pi
+        self.theta_right = math.acos(self.sin_theta) * 180 / math.pi
         
         # Starting Point
         self.x = 550
@@ -35,9 +46,6 @@ class MainWindow(QWidget):
         painter.end()
 
     def drawSquare(self, painter):
-        pen = QPen(Qt.blue)
-        pen.setWidth(2)
-        painter.setPen(pen)
         self.recurDraw(painter, 1, self.x, self.y, self.r)
 
     def turnLeft(self, painter, x, y):
@@ -62,22 +70,33 @@ class MainWindow(QWidget):
 
     def recurDraw(self, painter, n, x, y, r):
 
+
         # Stop Recursive
         if n > self.limit:
             return
 
         else:
         
+            # Color
+            c = n * 24
+            if c > 255:
+                c = 255
+
+            color = QColor(255, c, c)
+            pen   = QPen(color)
+            pen.setWidth(2)
+            painter.setPen(pen)
             rect_left = QRectF(x, y, r, r)
+            painter.fillRect(rect_left, QBrush(color))
             painter.drawRects(rect_left)
             
             left_x = x
-            left_y = y - r * 4/5
-            left_r = r * 4/5
+            left_y = y - r * self.cos_theta
+            left_r =     r * self.cos_theta
 
-            right_x = (r - r * 3/5) + x
-            right_y = y - r * 3 / 5
-            right_r = r * 3 / 5
+            right_x = (r - r * self.sin_theta) + x
+            right_y =  y - r * self.sin_theta
+            right_r =      r * self.sin_theta
 
             # Draw Left
             self.turnLeft(painter, x, y)
