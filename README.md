@@ -1,8 +1,14 @@
 # PyQT-Fractal
 
+## Virtualenv
+
+	virtualenv venv
+	. venv/bin/activate
+	pip install -r requirements.txt
+
 ## Install On Mac OSX
 
-	brew install pyqt5
+	brew install pyqt5 sip
 	export PYTHONPATH="${PYTHONPATH}:/usr/local/Cellar/pyqt5/5.7/lib/python3.5/site-packages:/usr/local/Cellar/sip/4.18.1/lib/python3.5/site-packages"
 
 ## Install on Windows
