@@ -19,6 +19,9 @@ class MainWindow(QWidget):
 
         # Init recur time
         self.limit = 1
+
+        if len(args) < 2:
+            exit(0)
         
         if args[1] != None and args[1] == '1':
 
@@ -26,7 +29,7 @@ class MainWindow(QWidget):
             self.cos_theta   = 4 / 5;
             self.sin_theta   = 3 / 5;
 
-        elif args[1] == '2':
+        else:
 
             # 5/12/13
             self.cos_theta   = 12 / 13;
@@ -117,6 +120,7 @@ class MainWindow(QWidget):
 
 
     def eventFilter(self, source, event):
+
         if event.type() == QEvent.MouseButtonPress:
             
             # increase recursive level
